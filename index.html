@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Tareas</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Checklist de Tareas</h1>
+    <p class="app-subtitle">Crea tu lista del día, cúmplela en orden y descarga el reporte al terminar.</p>
+  </header>
+
+  <main>
+    <!-- Vista 1: creación de la lista -->
+    <section id="view-setup" class="view">
+      <form id="form-setup" novalidate>
+        <div class="field">
+          <label for="list-name">Nombre de las tareas del día</label>
+          <input type="text" id="list-name" name="list-name" placeholder="Ej: Lunes 10 de noviembre" required>
+          <p class="field-error" data-for="list-name"></p>
+        </div>
+
+        <div class="field">
+          <label for="task-count">Número de tareas a agregar</label>
+          <div class="field-inline">
+            <input type="number" id="task-count" name="task-count" min="1" max="30" placeholder="Ej: 5">
+            <button type="button" id="btn-generate-rows" class="btn btn-secondary">Generar renglones</button>
+          </div>
+          <p class="field-error" data-for="task-count"></p>
+        </div>
+
+        <div id="rows-container" class="rows-container" aria-live="polite"></div>
+
+        <p id="setup-general-error" class="field-error" hidden></p>
+
+        <button type="submit" id="btn-create-list" class="btn btn-primary" disabled>Crear lista</button>
+      </form>
+    </section>
+
+    <!-- Vista 2: ejecución secuencial -->
+    <section id="view-execution" class="view" hidden>
+      <div class="execution-header">
+        <h2 id="execution-title"></h2>
+        <p id="execution-progress" class="progress-text"></p>
+      </div>
+      <ol id="task-list" class="task-list"></ol>
+    </section>
+
+    <!-- Vista 3: reporte final -->
+    <section id="view-report" class="view" hidden>
+      <h2>Lista completada</h2>
+      <table class="report-table">
+        <thead>
+          <tr><th>Tarea</th><th>Plazo</th><th>Completada</th><th>Tiempo</th></tr>
+        </thead>
+        <tbody id="report-body"></tbody>
+      </table>
+      <div class="report-actions">
+        <button type="button" id="btn-download-pdf" class="btn btn-primary">Descargar reporte PDF</button>
+        <button type="button" id="btn-new-list" class="btn btn-secondary">Crear nueva lista</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="alert-banner" class="alert-banner" role="alert" hidden>
+    <span id="alert-text"></span>
+    <button type="button" id="alert-dismiss" aria-label="Cerrar aviso">&times;</button>
+  </div>
+
+  <datalist id="task-suggestions"></datalist>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/alerts.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
